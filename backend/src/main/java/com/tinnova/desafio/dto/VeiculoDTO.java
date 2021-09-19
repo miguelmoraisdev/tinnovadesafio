@@ -23,7 +23,6 @@ public class VeiculoDTO implements Serializable{
 
 	public VeiculoDTO(Long id, String veiculo, String marca, Integer ano, String descricao, boolean vendido,
 			Instant created, Instant updated) {
-		super();
 		this.id = id;
 		this.veiculo = veiculo;
 		this.marca = marca;

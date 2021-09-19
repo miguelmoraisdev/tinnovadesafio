@@ -2,7 +2,7 @@ package com.tinnova.desafio.dto;
 
 import java.io.Serializable;
 
-public class VeiculoInsertDTO implements Serializable{
+public class UpdatePutVeiculoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String veiculo;
@@ -11,11 +11,11 @@ public class VeiculoInsertDTO implements Serializable{
 	private String descricao;
 	private boolean vendido;
 	
-	public VeiculoInsertDTO() {
+	public UpdatePutVeiculoDTO() {
 		
 	}
 
-	public VeiculoInsertDTO(String veiculo, String marca, Integer ano, String descricao, boolean vendido) {
+	public UpdatePutVeiculoDTO(String veiculo, String marca, Integer ano, String descricao, boolean vendido) {
 		this.veiculo = veiculo;
 		this.marca = marca;
 		this.ano = ano;
