@@ -3,6 +3,8 @@ package com.tinnova.desafio.services;
 import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import com.tinnova.desafio.dto.VeiculoDTO;
 import com.tinnova.desafio.dto.VeiculoInsertDTO;
 import com.tinnova.desafio.entities.Veiculo;
 import com.tinnova.desafio.repositories.VeiculoRepository;
+import com.tinnova.desafio.services.exceptions.DatabaseException;
+import com.tinnova.desafio.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class VeiculoService {
@@ -41,4 +45,15 @@ public class VeiculoService {
 		return new VeiculoDTO(entity);
 	}
 
+	public void delete(Long id) {
+		try {
+			repository.deleteById(id);
+		}
+		catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Integrity Violation");
+		}
+	}
 }
