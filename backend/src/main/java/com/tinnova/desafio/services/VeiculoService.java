@@ -3,6 +3,8 @@ package com.tinnova.desafio.services;
 import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,13 @@ public class VeiculoService {
 	
 	@Autowired
 	private VeiculoRepository repository;
+	
+	
+	@Transactional(readOnly = true)
+	public Page<VeiculoDTO> findAll(Pageable pageable) {
+		Page<Veiculo> page = repository.findAll(pageable);
+		return page.map(x -> new VeiculoDTO(x));
+	}
 	
 	
 	@Transactional
