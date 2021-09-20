@@ -1,6 +1,7 @@
 package com.tinnova.desafio.services;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,7 @@ import com.tinnova.desafio.entities.Veiculo;
 import com.tinnova.desafio.projections.VeiculosPerCompany;
 import com.tinnova.desafio.projections.VeiculosPerDecade;
 import com.tinnova.desafio.repositories.VeiculoRepository;
+import com.tinnova.desafio.services.exceptions.CompanyException;
 import com.tinnova.desafio.services.exceptions.DatabaseException;
 import com.tinnova.desafio.services.exceptions.ResourceNotFoundException;
 
@@ -86,6 +88,7 @@ public class VeiculoService {
 	public VeiculoDTO insert(VeiculoInsertDTO dto) {
 		Veiculo entity = new Veiculo();
 		entity.setVeiculo(dto.getVeiculo());
+		validateCompanies(dto.getMarca());
 		entity.setMarca(dto.getMarca());
 		entity.setAno(dto.getAno());
 		entity.setDescricao(dto.getDescricao());
@@ -101,6 +104,7 @@ public class VeiculoService {
 		try {
 			Veiculo entity = repository.getOne(id);
 			entity.setVeiculo(dto.getVeiculo());
+			validateCompanies(dto.getMarca());
 			entity.setMarca(dto.getMarca());
 			entity.setAno(dto.getAno());
 			entity.setDescricao(dto.getDescricao());
@@ -137,6 +141,19 @@ public class VeiculoService {
 		}
 		catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Integrity Violation");
+		}
+	}
+	
+	public void validateCompanies(String company){
+		List<String> listCompany = Arrays.asList("Chevrolet","Ford","Fiat","Volkswagen", "Honda", "Peugeot", "Renault");
+		boolean validate = false;
+		for(String position : listCompany) {
+			if (company.equals(position)) {
+				validate = true;
+			}	
+		}
+		if (validate == false) {
+			throw new CompanyException("A marca foi escrita de forma incorreta!");
 		}
 	}
 }
