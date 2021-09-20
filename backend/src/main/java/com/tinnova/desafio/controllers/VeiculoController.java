@@ -54,6 +54,12 @@ public class VeiculoController {
 		return ResponseEntity.ok().body(dto);
 	}  
 	
+	@GetMapping("/lastVehiclesRegistred")
+	public ResponseEntity<List<VeiculoDTO>> findLastVehiclesRegistred() {
+		List<VeiculoDTO> dto = service.getlastVehiclesRegistred();
+		return ResponseEntity.ok().body(dto);
+	}  
+	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<VeiculoDTO> findById(@PathVariable Long id){
 		VeiculoDTO dto = service.findById(id);

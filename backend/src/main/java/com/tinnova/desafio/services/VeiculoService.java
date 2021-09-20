@@ -1,6 +1,8 @@
 package com.tinnova.desafio.services;
 
 import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -58,8 +60,18 @@ public class VeiculoService {
 	public List<VeiculoPerCompanyDTO> getQtdVeiculosPerCompany() {
 		List<VeiculosPerCompany> projection = repository.getVeiculosPerCompany();
 		List<VeiculoPerCompanyDTO> listDTO = projection.stream().map(x -> new VeiculoPerCompanyDTO(x)).collect(Collectors.toList());
-		// List<CategoryDTO> listDTO = list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
 		return listDTO;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<VeiculoDTO> getlastVehiclesRegistred() {
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DAY_OF_MONTH, -8);
+		Date initialDate = cal.getTime();
+		List<Veiculo> list = repository.getLastVeiculos(initialDate);
+		return list.stream().map(x -> new VeiculoDTO(x)).collect(Collectors.toList());
 	}
 	
 	@Transactional
