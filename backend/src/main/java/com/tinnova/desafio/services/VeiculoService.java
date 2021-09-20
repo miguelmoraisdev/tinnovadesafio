@@ -1,7 +1,9 @@
 package com.tinnova.desafio.services;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -18,7 +20,9 @@ import com.tinnova.desafio.dto.UpdatePutVeiculoDTO;
 import com.tinnova.desafio.dto.UpdateVeiculoDTO;
 import com.tinnova.desafio.dto.VeiculoDTO;
 import com.tinnova.desafio.dto.VeiculoInsertDTO;
+import com.tinnova.desafio.dto.VeiculoPerCompanyDTO;
 import com.tinnova.desafio.entities.Veiculo;
+import com.tinnova.desafio.projections.VeiculosPerCompany;
 import com.tinnova.desafio.repositories.VeiculoRepository;
 import com.tinnova.desafio.services.exceptions.DatabaseException;
 import com.tinnova.desafio.services.exceptions.ResourceNotFoundException;
@@ -50,6 +54,13 @@ public class VeiculoService {
 		return new NumberUnsoldDTO(message, quantity);
 	}
 	
+	@Transactional(readOnly = true)
+	public List<VeiculoPerCompanyDTO> getQtdVeiculosPerCompany() {
+		List<VeiculosPerCompany> projection = repository.getVeiculosPerCompany();
+		List<VeiculoPerCompanyDTO> listDTO = projection.stream().map(x -> new VeiculoPerCompanyDTO(x)).collect(Collectors.toList());
+		// List<CategoryDTO> listDTO = list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
+		return listDTO;
+	}
 	
 	@Transactional
 	public VeiculoDTO insert(VeiculoInsertDTO dto) {

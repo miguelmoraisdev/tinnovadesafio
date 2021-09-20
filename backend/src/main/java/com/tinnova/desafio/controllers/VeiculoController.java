@@ -1,5 +1,7 @@
 package com.tinnova.desafio.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +24,7 @@ import com.tinnova.desafio.dto.UpdatePutVeiculoDTO;
 import com.tinnova.desafio.dto.UpdateVeiculoDTO;
 import com.tinnova.desafio.dto.VeiculoDTO;
 import com.tinnova.desafio.dto.VeiculoInsertDTO;
+import com.tinnova.desafio.dto.VeiculoPerCompanyDTO;
 import com.tinnova.desafio.services.VeiculoService;
 
 @RestController
@@ -43,7 +46,13 @@ public class VeiculoController {
 	public ResponseEntity<NumberUnsoldDTO> findNumberOfUnsoldVehicles() {
 			NumberUnsoldDTO dto = service.numberOfUnsold();
 		return ResponseEntity.ok().body(dto);
-	} 
+	}  
+	
+	@GetMapping("/amountVehiclesPerCompany")
+	public ResponseEntity<List<VeiculoPerCompanyDTO>> findQtdVehiclesPerCompany() {
+		List<VeiculoPerCompanyDTO> dto = service.getQtdVeiculosPerCompany();
+		return ResponseEntity.ok().body(dto);
+	}  
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<VeiculoDTO> findById(@PathVariable Long id){
