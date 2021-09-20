@@ -23,8 +23,10 @@ import com.tinnova.desafio.dto.UpdateVeiculoDTO;
 import com.tinnova.desafio.dto.VeiculoDTO;
 import com.tinnova.desafio.dto.VeiculoInsertDTO;
 import com.tinnova.desafio.dto.VeiculoPerCompanyDTO;
+import com.tinnova.desafio.dto.VeiculosPerDecadeDTO;
 import com.tinnova.desafio.entities.Veiculo;
 import com.tinnova.desafio.projections.VeiculosPerCompany;
+import com.tinnova.desafio.projections.VeiculosPerDecade;
 import com.tinnova.desafio.repositories.VeiculoRepository;
 import com.tinnova.desafio.services.exceptions.DatabaseException;
 import com.tinnova.desafio.services.exceptions.ResourceNotFoundException;
@@ -59,8 +61,8 @@ public class VeiculoService {
 	@Transactional(readOnly = true)
 	public List<VeiculoPerCompanyDTO> getQtdVeiculosPerCompany() {
 		List<VeiculosPerCompany> projection = repository.getVeiculosPerCompany();
-		List<VeiculoPerCompanyDTO> listDTO = projection.stream().map(x -> new VeiculoPerCompanyDTO(x)).collect(Collectors.toList());
-		return listDTO;
+		return projection.stream().map(x -> new VeiculoPerCompanyDTO(x)).collect(Collectors.toList());
+		
 	}
 	
 	@Transactional(readOnly = true)
@@ -72,6 +74,12 @@ public class VeiculoService {
 		Date initialDate = cal.getTime();
 		List<Veiculo> list = repository.getLastVeiculos(initialDate);
 		return list.stream().map(x -> new VeiculoDTO(x)).collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public List<VeiculosPerDecadeDTO> getVehiclesPerDecade() {
+		List<VeiculosPerDecade> list = repository.getVeiculosPerDecade();
+		return list.stream().map(x -> new VeiculosPerDecadeDTO(x)).collect(Collectors.toList());
 	}
 	
 	@Transactional

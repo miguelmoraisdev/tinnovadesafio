@@ -25,6 +25,7 @@ import com.tinnova.desafio.dto.UpdateVeiculoDTO;
 import com.tinnova.desafio.dto.VeiculoDTO;
 import com.tinnova.desafio.dto.VeiculoInsertDTO;
 import com.tinnova.desafio.dto.VeiculoPerCompanyDTO;
+import com.tinnova.desafio.dto.VeiculosPerDecadeDTO;
 import com.tinnova.desafio.services.VeiculoService;
 
 @RestController
@@ -57,6 +58,12 @@ public class VeiculoController {
 	@GetMapping("/lastVehiclesRegistred")
 	public ResponseEntity<List<VeiculoDTO>> findLastVehiclesRegistred() {
 		List<VeiculoDTO> dto = service.getlastVehiclesRegistred();
+		return ResponseEntity.ok().body(dto);
+	}  
+	
+	@GetMapping("/VehiclesPerDecade")
+	public ResponseEntity<List<VeiculosPerDecadeDTO>> findVehiclesPerDecade() {
+		List<VeiculosPerDecadeDTO> dto = service.getVehiclesPerDecade();
 		return ResponseEntity.ok().body(dto);
 	}  
 	
