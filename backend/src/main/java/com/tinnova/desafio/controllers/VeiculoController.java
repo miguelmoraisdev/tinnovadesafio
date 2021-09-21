@@ -45,7 +45,7 @@ public class VeiculoController {
 	
 	@GetMapping("/numberOfUnsoldVehicles")
 	public ResponseEntity<NumberUnsoldDTO> findNumberOfUnsoldVehicles() {
-			NumberUnsoldDTO dto = service.numberOfUnsold();
+		NumberUnsoldDTO dto = service.numberOfUnsold();
 		return ResponseEntity.ok().body(dto);
 	}  
 	
@@ -96,11 +96,5 @@ public class VeiculoController {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	/*@PostMapping
-	public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto){
-		dto = service.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-		return ResponseEntity.created(uri).body(dto);
-	} */
 
 }
